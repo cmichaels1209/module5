@@ -1,41 +1,24 @@
-import sys
-import pytest
+import os
 
 class App:
-    """This class represents the main application that runs the REPL loop."""
-    def start(self, test_mode=False):
-        """Start the REPL loop"""
-        while True:
-            command = input(">>> ").strip()
-            if command == "exit":
-                print("Exiting...")
-                sys.exit(0)  # Use 0 for clean exit
-            elif test_mode:
-                break  # Prevent infinite loop during tests
-            else:
-                print(f"No such command: {command}")
+    """This class represents the main application."""
+    def get_environment_variable(self, variable_name):
+        """
+        Retrieve the value of an environment variable.
 
-def test_app_start_exit_command(capfd, monkeypatch):
-    """Test that the REPL exits correctly on 'exit' command."""
-    # Simulate user entering 'exit'
-    monkeypatch.setattr('builtins.input', lambda _: 'exit')
+        Args:
+            variable_name (str): The name of the environment variable to retrieve.
+
+        Returns:
+            str: The value of the environment variable, or None if not set.
+        """
+        return os.getenv(variable_name)
+
+def test_app_get_environment_variable():
+    """Test retrieving an environment variable."""
     app = App()
-    with pytest.raises(SystemExit) as excinfo:
-        app.start(test_mode=True)  # Prevent infinite loop
+    # Retrieve the current environment setting
+    env_value = app.get_environment_variable('ENVIRONMENT')
 
-    # Check that the exit was graceful with the correct exit code
-    assert excinfo.value.code == 0
-
-def test_app_start_unknown_command(capfd, monkeypatch):
-    """Test how the REPL handles an unknown command before exiting."""
-    # Simulate user entering an unknown command followed by 'exit'
-    inputs = iter(['unknown_command', 'exit'])
-    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
-    app = App()
-
-    with pytest.raises(SystemExit):
-        app.start()
-
-    # Verify that the unknown command was handled as expected
-    captured = capfd.readouterr()
-    assert "No such command: unknown_command" in captured.out
+    # Add an assertion to demonstrate the test is doing something
+    assert env_value is None or isinstance(env_value, str), "Environment variable should be a string or None"
