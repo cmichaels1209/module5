@@ -11,7 +11,8 @@ disable= unused-argument,
          line-too-long,
          redefined-outer-name,
          missing-module-docstring,
-         pointless-string-statement
+         pointless-string-statement,
+         missing-class-docstring
 
 [REPORTS]
 # Set the output format. Available formats: text, parseable, colorized, json, msvs (visual studio) and html
