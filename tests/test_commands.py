@@ -1,8 +1,9 @@
 import pytest
 from app import App
-from app.plugins.goodbye import GoodbyeCommand
-from app.plugins.greet import GreetCommand
+#from app.plugins.goodbye import GoodbyeCommand
+#from app.plugins.greet import GreetCommand
 
+"""Test Commands"""
 
 def test_app_greet_command(capfd, monkeypatch):
     """Test that the REPL correctly handles the 'greet' command."""
@@ -25,5 +26,6 @@ def test_app_menu_command(capfd, monkeypatch):
     app = App()
     with pytest.raises(SystemExit) as e:
         app.start()  # Assuming App.start() is now a static method based on previous discussions
+        print(e.value)
 
     assert str(e.value) == "Exiting...", "The app did not exit as expected"
