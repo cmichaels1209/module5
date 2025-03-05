@@ -1,18 +1,22 @@
+"""This module contains tests for command execution in the application."""
+
 import pytest
 from app import App
 from app.commands.goodbye import GoodbyeCommand
 from app.commands.greet import GreetCommand
 
 def test_greet_command(capfd):
+    """Test that GreetCommand prints 'Hello, World!'"""
     command = GreetCommand()
     command.execute()
-    out, err = capfd.readouterr()
+    out, _ = capfd.readouterr()
     assert out == "Hello, World!\n", "The GreetCommand should print 'Hello, World!'"
 
 def test_goodbye_command(capfd):
+    """Test that GoodbyeCommand prints 'Goodbye'"""
     command = GoodbyeCommand()
     command.execute()
-    out, err = capfd.readouterr()
+    out, _ = capfd.readouterr()
     assert out == "Goodbye\n", "The GreetCommand should print 'Hello, World!'"
 
 def test_app_greet_command(capfd, monkeypatch):

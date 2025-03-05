@@ -1,3 +1,5 @@
+"""This module contains tests for the App class and REPL functionality."""
+
 import pytest
 from app import App
 
